@@ -38,7 +38,7 @@ To get started with Navio, you can use it directly via CDN or include the bundle
 Add the following script to your HTML file:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/fahmirizalbudi/navio@master/bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fahmirizalbudi/navio@main/bundle.js"></script>
 ```
 
 ## Usage
@@ -76,4 +76,4 @@ For full documentation and examples, please visit the [Documentation Site](https
 
 ## License
 
-MIT License. Copyright © 2026 Navio.
+MIT License. Copyright © 2026 @fahmirizalbudi.
