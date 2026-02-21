@@ -1,0 +1,92 @@
+<div class="space-y-16 animate-in fade-in duration-500">
+    <div>
+        <h1 class="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-6">Examples</h1>
+        <p class="text-xl text-slate-500 font-medium">Real-world implementation patterns for Navio.</p>
+    </div>
+
+    <!-- Basic SPA Example -->
+    <section class="space-y-6">
+        <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Simple SPA with Hash Routing</h3>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            The simplest way to use Navio. Perfect for static sites hosted on GitHub Pages or basic file servers where server-side rewrites aren't available.
+        </p>
+        
+        <div class="bg-slate-900 rounded-3xl p-6 md:p-8 overflow-x-auto shadow-xl shadow-slate-200/50">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+<span class="text-slate-500">&lt;!-- index.html --&gt;</span>
+&lt;script src="https://cdn.jsdelivr.net/gh/fahmirizalbudi/navio@master/bundle.js"&gt;&lt;/script&gt;
+
+&lt;nav&gt;
+  <span class="text-slate-500">&lt;!-- Use standard paths, Navio handles the hash --&gt;</span>
+  &lt;a href="/" <span class="text-emerald-400">data-navio</span>&gt;Home&lt;/a&gt;
+  &lt;a href="/about" <span class="text-emerald-400">data-navio</span>&gt;About&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  const router = new Navio({ <span class="text-emerald-400">hashMode: true</span> });
+  const app = document.getElementById('app');
+
+  router
+    .on('/', () => app.innerHTML = '&lt;h1&gt;Home&lt;/h1&gt;')
+    .on('/about', () => app.innerHTML = '&lt;h1&gt;About&lt;/h1&gt;')
+    .start();
+&lt;/script&gt;
+</pre>
+        </div>
+    </section>
+
+    <!-- Dynamic Dashboard Example -->
+    <section class="space-y-6">
+        <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Dynamic Dashboard with Parameters</h3>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Fetching data based on URL parameters. This example simulates loading user profiles.
+        </p>
+        
+        <div class="bg-slate-900 rounded-3xl p-6 md:p-8 overflow-x-auto shadow-xl shadow-slate-200/50">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+const router = new Navio();
+
+router.on(<span class="text-emerald-400">'/users/:id'</span>, async (context) => {
+  const userId = context.params.id;
+  document.body.innerHTML = 'Loading user...';
+  
+  try {
+    <span class="text-slate-500">// Simulate API call</span>
+    const user = await fetchUser(userId); 
+    
+    document.body.innerHTML = `
+      &lt;h1&gt;${user.name}&lt;/h1&gt;
+      &lt;p&gt;Email: ${user.email}&lt;/p&gt;
+      &lt;a href="/users" data-navio&gt;Back to List&lt;/a&gt;
+    `;
+  } catch (err) {
+    document.body.innerHTML = 'User not found';
+  }
+});
+</pre>
+        </div>
+    </section>
+
+    <!-- View Loader Example -->
+    <section class="space-y-6">
+        <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Loading External Views</h3>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Keep your code clean by separating HTML templates into files and loading them on demand.
+        </p>
+        
+        <div class="bg-slate-900 rounded-3xl p-6 md:p-8 overflow-x-auto shadow-xl shadow-slate-200/50">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+router.on('/contact', async () => {
+  <span class="text-slate-500">// Fetch 'contact.html' and inject body content</span>
+  const html = await Navio.fetchView(<span class="text-emerald-400">'views/contact.html'</span>);
+  document.getElementById('main').innerHTML = html;
+  
+  <span class="text-slate-500">// Initialize specific logic for this view</span>
+  initContactForm(); 
+});
+</pre>
+        </div>
+    </section>
+</div>

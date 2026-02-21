@@ -1,0 +1,167 @@
+<div class="space-y-20 animate-in fade-in duration-500">
+    <div>
+        <h1 class="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-6">API Reference</h1>
+        <p class="text-xl text-slate-500 font-medium">Complete documentation for the Navio class.</p>
+    </div>
+
+    <!-- Constructor -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-4 border-b-2 border-slate-100 pb-4">
+            <h3 class="text-3xl font-bold text-slate-900 font-mono tracking-tight">new Navio(options)</h3>
+        </div>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Initializes a new router instance. You can configure the root path and the routing mode (History API vs Hash).
+        </p>
+        
+        <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Parameters</h4>
+            <div class="space-y-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <code class="text-lg font-bold font-mono text-slate-900">options.root</code>
+                        <span class="text-xs font-bold bg-slate-200 text-slate-600 px-3 py-1 rounded-full">string</span>
+                        <span class="text-xs font-bold bg-blue-100 text-blue-600 px-3 py-1 rounded-full">Optional</span>
+                    </div>
+                    <p class="text-slate-500 text-base">The base path for the router. Useful if your app is hosted in a subdirectory. Defaults to <code class="font-mono text-slate-900 bg-white px-1.5 py-0.5 rounded border border-slate-200">'/'</code>.</p>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <code class="text-lg font-bold font-mono text-slate-900">options.hashMode</code>
+                        <span class="text-xs font-bold bg-slate-200 text-slate-600 px-3 py-1 rounded-full">boolean</span>
+                        <span class="text-xs font-bold bg-blue-100 text-blue-600 px-3 py-1 rounded-full">Optional</span>
+                    </div>
+                    <p class="text-slate-500 text-base">Whether to use hash-based routing (e.g., <code class="font-mono text-slate-600">/#/about</code>). Defaults to <code class="font-mono text-slate-900 bg-white px-1.5 py-0.5 rounded border border-slate-200">false</code> (History API).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 rounded-3xl p-8 shadow-xl shadow-slate-200/50">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+<span class="text-slate-500">// Example: Hash mode for static file hosting</span>
+const router = new Navio({ 
+  root: '/', 
+  hashMode: true 
+});
+</pre>
+        </div>
+    </section>
+
+    <!-- .on() -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-4 border-b-2 border-slate-100 pb-4">
+            <h3 class="text-3xl font-bold text-slate-900 font-mono tracking-tight">.on(path, callback)</h3>
+        </div>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Registers a route handler. The callback receives a <code>context</code> object containing parsed parameters and query strings.
+        </p>
+
+        <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Context Object</h4>
+            <ul class="space-y-4 text-slate-600">
+                <li class="flex gap-4">
+                    <code class="font-bold font-mono text-slate-900">context.path</code>
+                    <span>The current matched path string.</span>
+                </li>
+                <li class="flex gap-4">
+                    <code class="font-bold font-mono text-slate-900">context.params</code>
+                    <span>Object containing dynamic route parameters (e.g., <code class="text-sm bg-white border px-1 rounded">:id</code>).</span>
+                </li>
+                <li class="flex gap-4">
+                    <code class="font-bold font-mono text-slate-900">context.query</code>
+                    <span>Object containing parsed URL query parameters.</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="bg-slate-900 rounded-3xl p-8 shadow-xl shadow-slate-200/50 overflow-x-auto">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+router
+  .on(<span class="text-emerald-400">'/'</span>, () => console.log('Home'))
+  
+  <span class="text-slate-500">// Dynamic route with parameter</span>
+  .on(<span class="text-emerald-400">'/user/:id'</span>, (context) => {
+    console.log(<span class="text-indigo-300">`User ID: ${context.params.id}`</span>);
+  })
+
+  <span class="text-slate-500">// Route with query string (e.g., /search?q=navio)</span>
+  .on(<span class="text-emerald-400">'/search'</span>, (context) => {
+    console.log(<span class="text-indigo-300">`Search Term: ${context.query.q}`</span>);
+  });
+</pre>
+        </div>
+    </section>
+
+    <!-- .notFound() -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-4 border-b-2 border-slate-100 pb-4">
+            <h3 class="text-3xl font-bold text-slate-900 font-mono tracking-tight">.notFound(callback)</h3>
+        </div>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Sets a fallback handler that executes when no registered route matches the current URL.
+        </p>
+        <div class="bg-slate-900 rounded-3xl p-8 shadow-xl shadow-slate-200/50">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+router.notFound((context) => {
+  document.body.innerHTML = <span class="text-emerald-400">'&lt;h1&gt;404 Not Found&lt;/h1&gt;'</span>;
+  console.error(<span class="text-indigo-300">`Missing path: ${context.path}`</span>);
+});
+</pre>
+        </div>
+    </section>
+
+    <!-- .navigate() -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-4 border-b-2 border-slate-100 pb-4">
+            <h3 class="text-3xl font-bold text-slate-900 font-mono tracking-tight">.navigate(path)</h3>
+        </div>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Programmatically navigates to a new path. This updates the browser URL and triggers the router resolution logic immediately.
+        </p>
+        <div class="bg-slate-50 rounded-3xl p-6 border border-slate-100">
+            <code class="text-base font-mono text-slate-900">router.navigate('/dashboard');</code>
+        </div>
+    </section>
+
+    <!-- .start() -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-4 border-b-2 border-slate-100 pb-4">
+            <h3 class="text-3xl font-bold text-slate-900 font-mono tracking-tight">.start()</h3>
+        </div>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Initializes the router. This method attaches event listeners to <code class="font-bold text-slate-900">popstate</code> (or <code class="font-bold text-slate-900">hashchange</code>) and global click events for <code class="font-bold text-slate-900">data-navio</code> links. It then resolves the current route.
+        </p>
+    </section>
+    
+    <!-- Navio.fetchView() -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-4 border-b-2 border-slate-100 pb-4">
+            <h3 class="text-3xl font-bold text-slate-900 font-mono tracking-tight">Navio.fetchView(url)</h3>
+            <span class="text-xs font-bold bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full uppercase tracking-wide">Static Async</span>
+        </div>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            A helper method to fetch an external HTML file and extract its <code class="font-mono text-sm bg-slate-100 px-1 rounded">&lt;body&gt;</code> content. Useful for loading page partials.
+        </p>
+        
+        <div class="bg-slate-900 rounded-3xl p-8 shadow-xl shadow-slate-200/50 overflow-x-auto">
+<pre class="text-sm font-mono text-slate-300 leading-relaxed">
+router.on(<span class="text-emerald-400">'/about'</span>, async () => {
+  const html = await Navio.fetchView(<span class="text-emerald-400">'views/about.html'</span>);
+  document.getElementById('app').innerHTML = html;
+});
+</pre>
+        </div>
+    </section>
+
+    <!-- Declarative Links -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-4 border-b-2 border-slate-100 pb-4">
+            <h3 class="text-3xl font-bold text-slate-900 font-mono tracking-tight">Declarative Navigation</h3>
+        </div>
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+            Navio automatically intercepts clicks on anchor tags with the <code class="font-bold text-slate-900">data-navio</code> attribute, preventing full page reloads.
+        </p>
+        <div class="bg-slate-50 rounded-3xl p-6 border border-slate-100">
+            <code class="text-base font-mono text-slate-900">&lt;a href="/profile" <span class="text-blue-600">data-navio</span>&gt;Go to Profile&lt;/a&gt;</code>
+        </div>
+    </section>
+</div>

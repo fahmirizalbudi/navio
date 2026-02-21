@@ -1,0 +1,55 @@
+<div class="space-y-16 animate-in fade-in duration-500">
+    <!-- Header Section -->
+    <div>
+        <h1 class="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-6">Getting Started</h1>
+        <p class="text-xl text-slate-500 leading-relaxed max-w-2xl font-medium">
+            Navio is designed to be dropped into any project with zero build step required.
+        </p>
+    </div>
+
+    <!-- Installation -->
+    <div class="space-y-6">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Installation via CDN</h2>
+        <div class="bg-slate-900 rounded-2xl p-6 md:p-8 overflow-x-auto shadow-2xl shadow-slate-200/50">
+            <code class="font-mono text-sm md:text-base text-blue-300">
+                &lt;script src="<span class="text-white">https://cdn.jsdelivr.net/gh/fahmirizalbudi/navio@master/bundle.js</span>"&gt;&lt;/script&gt;
+            </code>
+        </div>
+    </div>
+
+    <!-- Usage Section -->
+    <div class="space-y-12">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Quick Start</h2>
+        
+        <div class="grid gap-8">
+            <!-- Step 1 -->
+            <div class="flex gap-6 md:gap-10">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 font-bold text-lg">1</div>
+                <div class="space-y-4 w-full">
+                    <h3 class="text-xl font-bold text-slate-900">Initialize Router</h3>
+                    <p class="text-slate-500 font-medium">Create a new instance. Use <code class="bg-slate-100 px-2 py-1 rounded text-sm font-bold text-slate-700">hashMode: true</code> for static sites.</p>
+                    <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                        <code class="text-sm font-mono text-slate-700">const router = new Navio({ hashMode: true });</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex gap-6 md:gap-10">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 font-bold text-lg">2</div>
+                <div class="space-y-4 w-full">
+                    <h3 class="text-xl font-bold text-slate-900">Define Routes</h3>
+                    <p class="text-slate-500 font-medium">Chain your route definitions clearly and concisely.</p>
+                    <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+<pre class="text-sm font-mono text-slate-700 leading-relaxed">
+router
+  .on('/', () => renderHome())
+  .on('/about', () => renderAbout())
+  .start();
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
