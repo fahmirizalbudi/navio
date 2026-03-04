@@ -12,7 +12,7 @@
 
 <br/>
 
-# Navio
+## Navio
 
 Navio is a lightweight, zero-dependency client-side router for modern JavaScript applications. Built for simplicity and performance, it offers a robust routing solution without the overhead of larger frameworks.
 
